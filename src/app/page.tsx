@@ -1,12 +1,12 @@
-import AboutSectionOne from "@/components/About/AboutSectionOne";
-import AboutSectionTwo from "@/components/About/AboutSectionTwo";
+import InfoParents from "@/components/Infos/InfoParents";
+import InfoStudents from "@/components/Infos/InfoStudents";
 import ScrollUp from "@/components/Common/ScrollUp";
-import Contact from "@/components/Contact";
+import Questions from "@/components/Questions";
 import Features from "@/components/Features";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import Pricing from "@/components/Pricing";
+import ExtraCurricular from "@/components/Extracurricular";
 import Video from "@/components/Video";
 import { Metadata } from "next";
 
@@ -24,11 +24,10 @@ export default function Home() {
       <Hero />
       <Features />
       <Video />
-      {/* <Brands /> */}
-      <AboutSectionOne />
-      <AboutSectionTwo />
-      <Pricing />
-      <Contact />
+      <InfoParents />
+      <InfoStudents />
+      <ExtraCurricular />
+      <Questions />
       <Footer />
     </>
   );

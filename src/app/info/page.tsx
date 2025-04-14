@@ -1,24 +1,23 @@
-import AboutSectionOne from "@/components/Infos/InfoParents";
-import AboutSectionTwo from "@/components/Infos/InfoStudents";
+import InfoParents from "@/components/Infos/InfoParents";
+import InfoStudents from "@/components/Infos/InfoStudents";
 import Breadcrumb from "@/components/Common/Breadcrumb";
 
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Page | Free Next.js Template for Startup and SaaS",
-  description: "This is About Page for Startup Nextjs Template",
-  // other metadata
+  title: "informations"
+  
 };
 
 const AboutPage = () => {
   return (
     <>
       <Breadcrumb
-        pageName="About Page"
+        pageName="Information Pages"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
       />
-      <AboutSectionOne />
-      <AboutSectionTwo />
+      <InfoParents />
+      <InfoStudents />
     </>
   );
 };

@@ -39,7 +39,7 @@ const AboutSectionTwo = () => {
               <div className="mb-2 max-w-[670px] lg:mb-0" data-wow-delay=".15s">
                 <div className=" flex w-full flex-col">
                   <div className="mesCont flex w-full">
-                    <div className="lg:ml-30 container mb-8 rounded-l-[40px] rounded-br-[40px] border border-t-blue-500 p-4 shadow-md shadow-white lg:h-auto lg:w-[100%] xl:ml-40">
+                    <div className="lg:ml-30 container mb-8 rounded-l-[40px] rounded-br-[40px] border border-t-blue-500 p-4 shadow-md shadow-black/80 dark:shadow-white lg:h-auto lg:w-[100%] xl:ml-40">
                       <div className="topic font-bold text-green-500">
                         About the school fee
                       </div>
@@ -68,7 +68,7 @@ const AboutSectionTwo = () => {
                     </div>
                   </div>
                   <div className="mesCont flex w-full">
-                    <div className="lg:ml-30 container mb-8 rounded-l-[40px] rounded-br-[40px] border border-t-blue-500 p-4 shadow-md shadow-white lg:h-auto lg:w-[100%] xl:ml-40">
+                    <div className="lg:ml-30 container mb-8 rounded-l-[40px] rounded-br-[40px] border border-t-blue-500 p-4 shadow-md shadow-black/80 dark:shadow-white lg:h-auto lg:w-[100%] xl:ml-40">
                       <div className="topic font-bold text-green-500">
                         About the school fee
                       </div>

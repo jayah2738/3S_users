@@ -13,7 +13,7 @@ const checkIcon = (
 const AboutSectionOne = () => {
   const List = ({ text }) => (
     <p className="mb-5 flex items-center text-lg font-medium text-body-color">
-      <span className="mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
+      <span className="mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md bg-amber-500 bg-opacity-10 text-amber-500">
         {checkIcon}
       </span>
       {text}
@@ -60,7 +60,7 @@ const AboutSectionOne = () => {
               <div className="mb-2 max-w-[670px] lg:mb-0" data-wow-delay=".15s">
                 <div className=" flex w-full flex-col">
                   <div className="mesCont flex w-full">
-                    <div className="lg:ml-30 container mb-8 rounded-l-[40px] rounded-br-[40px] border border-t-rose-500 p-4 shadow-md shadow-white lg:h-auto lg:w-[100%] xl:ml-40">
+                    <div className="lg:ml-30 container mb-8 rounded-l-[40px] rounded-br-[40px] border border-t-rose-500 p-4 shadow-md shadow-black/80 dark:shadow-white lg:h-auto lg:w-[100%] xl:ml-40">
                       <div className="topic font-bold text-green-500">
                         About the school fee
                       </div>
@@ -91,7 +91,7 @@ const AboutSectionOne = () => {
                 </div>
 
                 <div className="mesCont flex w-full">
-                    <div className="lg:ml-30 container mb-8 rounded-l-[40px] rounded-br-[40px] border border-t-rose-500 p-4 shadow-md shadow-white lg:h-auto lg:w-[100%] xl:ml-40">
+                    <div className="lg:ml-30 container mb-8 rounded-l-[40px] rounded-br-[40px] border border-t-rose-500 p-4 shadow-md shadow-black/80 dark:shadow-white lg:h-auto lg:w-[100%] xl:ml-40">
                       <div className="topic font-bold text-green-500">
                         About the school fee
                       </div>

@@ -12,7 +12,7 @@ const ExtraCurricular = () => {
       <div className="container">
         <SectionTitle
           title="Extracurricular Activities"
-          paragraph="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
+          paragraph="SamSriah School also has some extracurricular activities so that you can join us to learn the following activities even if you are not our students"
           center
           width="665px"
         />
@@ -62,7 +62,8 @@ const ExtraCurricular = () => {
             packageName=""
             price={isMonthly ? "40" : "120"}
             duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            activityTitle="Music"
+            subtitle="Learning music is like unlocking a magical language that speaks to the soul. Every note you play, every chord you master, is a step closer to expressing emotions words can’t capture."
           >
             <ActivityList text="Piano" status="active" />
             <ActivityList text="Drums" status="active" />
@@ -75,27 +76,29 @@ const ExtraCurricular = () => {
             packageName=""
             price={isMonthly ? "399" : "789"}
             duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            activityTitle="Web-Developer"
+            subtitle="Learning web development is like building your own digital universe—one line of code at a time. Every challenge you solve, every project you create, is a step toward turning ideas into reality."
           >
-            <ActivityList text="A1" status="active" />
-            <ActivityList text="A2" status="active" />
-            <ActivityList text="B1" status="active" />
-            <ActivityList text="B2" status="active" />
-            <ActivityList text="C1" status="active" />
-            <ActivityList text="C2" status="inactive" />
+            <ActivityList text="Html & css" status="active" />
+            <ActivityList text="Sass" status="active" />
+            <ActivityList text="Javascript" status="active" />
+            <ActivityList text="React.js" status="active" />
+            <ActivityList text="Next.js" status="active" />
+            <ActivityList text="ReactNative(Mobile Application)" status="inactive" />
           </ActivityBox>
           <ActivityBox
             packageName=""
             price={isMonthly ? "589" : "999"}
             duration={isMonthly ? "mo" : "yr"}
-            subtitle="Lorem ipsum dolor sit amet adiscing elit Mauris egestas enim."
+            activityTitle="Designer"
+            subtitle="Design is more than just aesthetics—it’s storytelling, problem-solving, and creating experiences that resonate. Every color, font, and pixel you choose shapes how the world interacts with ideas."
           >
-            <ActivityList text="HSK 1" status="active" />
-            <ActivityList text="HSK 2" status="active" />
-            <ActivityList text="HSK 3" status="active" />
-            <ActivityList text="HSK 4" status="active" />
-            <ActivityList text="HSK 5" status="inactive" />
-            <ActivityList text="HSK 6" status="inactive" />
+            <ActivityList text="Creativity & Expression 🎨" status="active" />
+            <ActivityList text="Problem-Solving 🔍" status="active" />
+            <ActivityList text=" Versatility ✨" status="active" />
+            <ActivityList text="Technical + Artistic Balance 💻🖌️" status="active" />
+            <ActivityList text="Continuous Learning 📚" status="inactive" />
+            <ActivityList text="Impact & Influence 🌍" status="inactive" />
           </ActivityBox>
         </div>
       </div>

@@ -10,7 +10,7 @@ const Features = () => {
         <div className="container">
           <SectionTitle
             title="Main Features"
-            paragraph="Students have many subjects to study at school but let me give you some examples"
+            paragraph="SamSriah School has many features as a modern school, let me give some examples of our features in school"
             center
           />
           <div className="grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-3">

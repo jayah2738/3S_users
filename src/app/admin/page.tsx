@@ -18,6 +18,7 @@ import { debounce } from "lodash";
 import { courseMaterialsData } from "./Admin";
 import { StudentsGradeStatsData } from "./Admin";
 import { TeacherStatsData } from "./Admin";
+import VideoUploadAndGallery from "@/components/VideosUploader/VideoUploader";
 
 
 
@@ -235,6 +236,7 @@ const AdminDashboard = () => {
                 </div>
               ))}
             </div>
+            <VideoUploadAndGallery/>
           </div>
         );
       case"students":

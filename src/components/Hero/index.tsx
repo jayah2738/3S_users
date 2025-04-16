@@ -55,7 +55,7 @@ const Hero = () => {
                      duration: 1,
                      delay: .8
                  }}
-                    href="/users/middleschool/six/exercise"
+                    href="/courses/[grade]"
                     className="rounded-full border-2 border-amber-500 bg-amber-500 px-8 py-4 text-base font-semibold text-white hover:border-2 hover:border-amber-500 hover:bg-amber-500 hover:text-amber-500 dark:bg-transparent dark:text-white dark:hover:border-2 dark:hover:border-amber-500 dark:hover:bg-amber-500"
                   >
                     🔥 Get courses

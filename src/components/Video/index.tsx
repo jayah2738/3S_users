@@ -5,12 +5,13 @@ import SectionTitle from "../Common/SectionTitle";
 import ModalVideo from "react-modal-video";
 import { motion } from "framer-motion";
 import { fadeIn } from "../variants";
+import ReactPlayer from "react-player";
 
 const Video = () => {
   const [isOpen, setOpen] = useState(false);
 
   return (
-    <section className="relative z-10 py-16 md:py-20 lg:py-28">
+    <section className="relative z-10 py-10 md:py-20 lg:py-16">
       <div className="container">
         <SectionTitle
           title="Ready to start learning"
@@ -28,12 +29,20 @@ const Video = () => {
         >
           <div className="w-full px-4">
             <div
-              className="mx-auto max-w-[770px] overflow-hidden rounded-md"
+              className="mx-auto max-w-[900px] max-h-[500px] overflow-hidden rounded-lg "
               data-wow-delay=".15s"
             >
               <div className="relative aspect-[77/40] items-center justify-center">
-                <Image src="/images/video/v1.jpg" alt="video image" fill />
-                <div className="absolute right-0 top-0 flex h-full w-full items-center justify-center">
+                {/* <Image src="/images/video/v1.jpg" alt="video image" fill /> */}
+                  <ReactPlayer
+                    url="https://www.youtube.com/watch?v=ZcO4KuriDU8"
+                    playing        // auto-plays when loaded
+                    loop           // repeats forever
+                    controls={false}      // shows player controls
+                    width="900px"
+                    height="500px"
+                  />
+                {/* <div className="absolute right-0 top-0 flex h-full w-full items-center justify-center">
                   <button
                     aria-label="video play button"
                     onClick={() => setOpen(true)}
@@ -53,7 +62,7 @@ const Video = () => {
                       2 0.339745L15.5 8.13397Z" />
                     </svg>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -65,7 +74,8 @@ const Video = () => {
         autoplay={true}
         start={true}
         isOpen={isOpen}
-        videoId="1qRfqboYWNo"
+        videoId="ZcO4KuriDU8"
+        controls="0"
         onClose={() => setOpen(false)}
       />
 
@@ -74,7 +84,7 @@ const Video = () => {
         initial="hidden"
         whileInView={"show"}
         viewport={{ once: true, amount: 0.7 }}
-      className="absolute bottom-0 left-0 right-0 z-[-1] h-full w-full bg-[url(/images/video/shape1.png)] bg-cover bg-center bg-no-repeat">
+        className="absolute bottom-0 left-0 right-0 z-[-1] h-full w-full bg-[url(/images/video/shape1.png)] bg-cover bg-center bg-no-repeat">
       </motion.div>
     </section>
   );

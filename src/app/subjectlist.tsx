@@ -3,7 +3,7 @@ import React from "react";
 const subjectlist = ({ programslists, subject, bglink }) => {
   return (
     <div
-      className="mt-8 flex h-36 w-80 flex-col items-center justify-between rounded-lg border  py-4 shadow-md shadow-amber-500"
+      className="mt-8 flex h-36 w-80 flex-col items-center justify-between rounded-lg border  py-4 shadow-md shadow-amber-500 hover:shadow-green-500 hover:translate-x-6 transition duration-300 ease-in-out "
       style={{
         background: `url(${bglink})`,
         backgroundSize: "cover",

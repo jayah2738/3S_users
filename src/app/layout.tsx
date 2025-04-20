@@ -23,7 +23,7 @@ export default function RootLayout({
         <Providers>
           {children}
           <ScrollToTop />
-          <CustomCursor />
+          {/* <CustomCursor /> */}
         </Providers>
       </body>
     </html>

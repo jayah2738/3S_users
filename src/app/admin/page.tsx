@@ -77,7 +77,7 @@ const AdminDashboard = () => {
     switch (activeTab) {
       case "dashboard":
         return (
-          <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 bg-white">
             <div className="rounded-lg bg-white p-6 shadow-md">
               <div className="flex items-center justify-between">
                 <div>
@@ -126,7 +126,7 @@ const AdminDashboard = () => {
         );
       case "materials":
         return (
-          <div>
+          <div className='bg-white' >
             <div className="mb-6 flex flex-wrap gap-4">
               <select
                 className="rounded-lg border px-4 py-2"

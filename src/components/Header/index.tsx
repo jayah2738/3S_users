@@ -159,7 +159,7 @@ const Header = () => {
                 </nav>
               </div>
               <div className="flex items-center justify-end pr-16 lg:pr-0">
-                <Link
+                {/* <Link
                   href="/signin"
                   className="hidden px-7 py-3 text-base font-medium lg:mr-2 md:mr-2 border-2 rounded-full hover:text-white dark:text-gray-500 md:block hover:bg-white hover:border-none"
                 >
@@ -170,7 +170,7 @@ const Header = () => {
                   className="ease-in-up shadow-btn hover:shadow-btn-hover hidden rounded-full bg-white px-8 py-3 text-base font-medium text-gray-500 transition duration-300 hover:bg-transparent hover:border-2 hover:border-white md:block md:px-9 lg:px-6 xl:px-9"
                 >
                   Sign Up
-                </Link>
+                </Link> */}
                 <div>
                   <ThemeToggler />
                 </div>

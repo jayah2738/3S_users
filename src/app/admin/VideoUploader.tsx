@@ -6,8 +6,7 @@ export default function VideoUploadForm() {
   const [title, setTitle] = useState('')
   const [video, setVideo] = useState<File | null>(null)
   const [path, setPath] = useState('')
-
-  
+  const [grade, setGrade] = useState('')
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -20,6 +19,7 @@ export default function VideoUploadForm() {
     formData.append('title', title)
     formData.append('video', video)
     formData.append('path', path)
+    formData.append('grade', grade)
 
     const res = await fetch('/api/videouploader', {
       method: 'POST',
@@ -47,6 +47,24 @@ export default function VideoUploadForm() {
       </div>
 
       <div>
+        <label className='ml-4 text-xl text-green-500'>Grade:</label>
+        <select
+          value={grade}
+          onChange={(e) => setGrade(e.target.value)}
+          className="border p-2 w-full rounded-full text-red-500 bg-white"
+          required
+        >
+          <option value="">Select Grade</option>
+          <option value="grade1">Grade 1</option>
+          <option value="grade2">Grade 2</option>
+          <option value="grade3">Grade 3</option>
+          <option value="grade4">Grade 4</option>
+          <option value="grade5">Grade 5</option>
+          <option value="grade6">Grade 6</option>
+        </select>
+      </div>
+
+      <div>
         <label className='ml-4 text-xl text-green-500'>Upload Path (example: /public/videos/):</label>
         <input
           type="text"
@@ -64,7 +82,6 @@ export default function VideoUploadForm() {
           type="file"
           accept="video/*"
           onChange={(e) => setVideo(e.target.files?.[0] || null)}
-
           className="border p-2 w-full rounded-full text-red-500"
           required
         />

@@ -1,10 +1,19 @@
-"use client";
+
 import ScrollToTop from "@/components/ScrollToTop";
 import { Inter } from "next/font/google";
 import "node_modules/react-modal-video/css/modal-video.css";
 import "../styles/index.css";
+import AuthProvider from '@/components/auth/AuthProvider';
+import Navigation from '@/components/Navigation';
+// import { Providers } from "./providers";
+// import CustomCursor from "@/components/CursorCustom/CursorCustom";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const metadata = {
+  title: 'Your App Name',
+  description: 'Your app description',
+};
 
 export default function RootLayout({
   children,
@@ -20,15 +29,15 @@ export default function RootLayout({
       <head />
 
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
-        <Providers>
-          {children}
+        <AuthProvider>
+          <main>{children}</main>
           <ScrollToTop />
           {/* <CustomCursor /> */}
-        </Providers>
+        </AuthProvider>
       </body>
     </html>
   );
 }
 
-import { Providers } from "./providers";import CustomCursor from "@/components/CursorCustom/CursorCustom";
+
 

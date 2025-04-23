@@ -72,7 +72,7 @@ const Hero = () => {
                     href="/admin"
                     className="inline-block rounded-full bg-black px-8 py-4 font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:border-2 dark:border-white dark:bg-white dark:text-amber-500 dark:hover:bg-transparent dark:hover:text-amber-500"
                   >
-                    Go back to the previous
+                    SignIn as Admin
                   </motion.a>
                 </div>
               </div>

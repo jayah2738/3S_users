@@ -6,20 +6,20 @@ export default function PdfUploadForm() {
   const [title, setTitle] = useState('')
   const [pdf, setPdf] = useState<File | null>(null)
   const [path, setPath] = useState('')
-
-  
+  const [grade, setGrade] = useState('')
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!pdf) {
-      alert('Please select a video file.')
+      alert('Please select a PDF file.')
       return
     }
 
     const formData = new FormData()
     formData.append('title', title)
-    formData.append('video', pdf)
+    formData.append('pdf', pdf)
     formData.append('path', path)
+    formData.append('grade', grade)
 
     const res = await fetch('/api/pdfuploader', {
       method: 'POST',
@@ -33,7 +33,7 @@ export default function PdfUploadForm() {
   return (
     <form onSubmit={handleUpload}
       className="space-y-4 shadow-md shadow-black/70 p-6 rounded-xl max-w-[500px] ">
-      <div className='text-black text-center text-2xl '>Upload Pdf</div>
+      <div className='text-black text-center text-2xl '>Upload PDF</div>
       <div>
         <label className='ml-4 text-xl text-green-500'>Title:</label>
         <input
@@ -44,6 +44,24 @@ export default function PdfUploadForm() {
           className="border p-2 w-full rounded-full text-red-500 bg-white placeholder:text-gray-500"
           required
         />
+      </div>
+
+      <div>
+        <label className='ml-4 text-xl text-green-500'>Grade:</label>
+        <select
+          value={grade}
+          onChange={(e) => setGrade(e.target.value)}
+          className="border p-2 w-full rounded-full text-red-500 bg-white"
+          required
+        >
+          <option value="">Select Grade</option>
+          <option value="grade1">Grade 1</option>
+          <option value="grade2">Grade 2</option>
+          <option value="grade3">Grade 3</option>
+          <option value="grade4">Grade 4</option>
+          <option value="grade5">Grade 5</option>
+          <option value="grade6">Grade 6</option>
+        </select>
       </div>
 
       <div>
@@ -64,7 +82,6 @@ export default function PdfUploadForm() {
           type="file"
           accept="pdf/*"
           onChange={(e) => setPdf(e.target.files?.[0] || null)}
-
           className="border p-2 w-full rounded-full text-red-500"
           required
         />
@@ -72,7 +89,7 @@ export default function PdfUploadForm() {
 
       <div className="w-full ">
         <button type="submit" className="bg-green-600 hover:bg-orange-500 text-white py-2 px-6 rounded-full">
-          Upload PDf
+          Upload PDF
         </button>
       </div>
     </form>

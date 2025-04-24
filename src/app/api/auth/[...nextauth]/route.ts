@@ -10,19 +10,42 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" },
+        adminCode: { label: "Admin Code", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error('Please enter an email and password');
+        if (!credentials?.username || !credentials?.password) {
+          throw new Error('Please enter username and password');
         }
 
         await connectDB();
 
-        const user = await User.findOne({ email: credentials.email });
+        // Check if this is an admin login attempt
+        if (credentials.adminCode) {
+          if (credentials.adminCode !== "0000") {
+            throw new Error('Invalid admin code');
+          }
+          // Create or find admin user
+          let admin = await User.findOne({ username: credentials.username, role: 'admin' });
+          if (!admin) {
+            admin = await User.create({
+              username: credentials.username,
+              password: credentials.password,
+              role: 'admin'
+            });
+          }
+          return {
+            id: admin._id.toString(),
+            name: admin.username,
+            role: 'admin',
+          };
+        }
+
+        // Regular user login
+        const user = await User.findOne({ username: credentials.username });
         if (!user) {
-          throw new Error('No user found with this email');
+          throw new Error('No user found with this username');
         }
 
         const isPasswordValid = await bcrypt.compare(
@@ -36,7 +59,6 @@ export const authOptions: AuthOptions = {
 
         return {
           id: user._id.toString(),
-          email: user.email,
           name: user.username,
           role: user.role,
         };
@@ -47,7 +69,7 @@ export const authOptions: AuthOptions = {
     strategy: 'jwt',
   },
   pages: {
-    signIn: '/login',
+    signIn: '/auth/login',
   },
   callbacks: {
     async jwt({ token, user }) {

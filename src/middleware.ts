@@ -1,18 +1,15 @@
 import { NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-export async function middleware(req: NextRequest) {
-  const token = await getToken({ req });
-  
-  // Check if this is an admin route
-  if (req.nextUrl.pathname.startsWith('/admin')) {
-    if (!token) {
-      return NextResponse.redirect(new URL('/auth/login', req.url));
-    }
+export function middleware(request: NextRequest) {
+  // Check if the request is for an admin route
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    // Get the admin status from session storage
+    const isAdmin = request.cookies.get('isAdmin')?.value === 'true';
     
-    if (token.role !== 'admin') {
-      return NextResponse.redirect(new URL('/', req.url));
+    // If not authenticated as admin, redirect to home page
+    if (!isAdmin) {
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
 
@@ -20,5 +17,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*']
+  matcher: '/admin/:path*',
 }; 

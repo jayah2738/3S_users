@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Grade {
+  id          String      @id @default(cuid())
+  name        String
+  level       String      // preschool, primary, middle, high
+  description String?
+  materials   Material[]
+  students    Student[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Material {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  type        String   // 'video' or 'pdf'
+  fileUrl     String
+  gradeId     String
+  grade       Grade    @relation(fields: [gradeId], references: [id])
+  subject     String
+  lessonType  String   // 'lesson' or 'exercise'
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([gradeId])
+  @@index([subject])
+  @@index([lessonType])
+}
+
+model Student {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  gradeId   String
+  grade     Grade    @relation(fields: [gradeId], references: [id])
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  sender    String
+  type      String   // 'parent' or 'student'
+  timestamp DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+} 

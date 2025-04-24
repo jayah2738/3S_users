@@ -1,9 +1,44 @@
 'use client'
 import Link from "next/link";
 import { motion,Variants } from "framer-motion";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
-  
+  const router = useRouter();
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [adminName, setAdminName] = useState("");
+  const [adminCode, setAdminCode] = useState("");
+  const [error, setError] = useState("");
+
+  const handleAdminSubmit = async (e) => {
+    e.preventDefault();
+    if (!adminName.trim()) {
+      setError("Please enter your name");
+      return;
+    }
+    if (adminCode !== "2043") {
+      setError("Invalid admin code");
+      return;
+    }
+
+    try {
+      // Generate a simple token (in a real app, this would come from your backend)
+      const adminToken = btoa(`${adminName}:${adminCode}`);
+      
+      // Store admin data in localStorage
+      localStorage.setItem('adminName', adminName);
+      localStorage.setItem('adminToken', adminToken);
+      localStorage.setItem('isAdmin', 'true');
+      
+      // Close modal and redirect to admin dashboard
+      setShowAdminModal(false);
+      router.push("/admin/dashboard");
+    } catch (error) {
+      setError("An error occurred during authentication");
+    }
+  };
+
   return (
     <>
       <section
@@ -55,12 +90,12 @@ const Hero = () => {
                      duration: 1,
                      delay: .8
                  }}
-                    href="/courses/[grade]"
+                    href="/auth/login"
                     className="rounded-full border-2 border-amber-500 bg-amber-500 px-8 py-4 text-base font-semibold text-white hover:border-2 hover:border-amber-500 hover:bg-amber-500 hover:text-amber-500 dark:bg-transparent dark:text-white dark:hover:border-2 dark:hover:border-amber-500 dark:hover:bg-amber-500"
                   >
                     🔥 Get courses
                   </motion.a>
-                  <motion.a
+                  <motion.button
                    initial={{ opacity: 0,x:-500 }}
                    animate={{ opacity: 1,x:0 }}
                    transition={{
@@ -69,11 +104,11 @@ const Hero = () => {
                      duration: .5,
                      delay: .8
                  }}
-                    href="/admin"
+                    onClick={() => setShowAdminModal(true)}
                     className="inline-block rounded-full bg-black px-8 py-4 font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:border-2 dark:border-white dark:bg-white dark:text-amber-500 dark:hover:bg-transparent dark:hover:text-amber-500"
                   >
                     SignIn as Admin
-                  </motion.a>
+                  </motion.button>
                 </div>
               </div>
             </div>
@@ -134,7 +169,6 @@ const Hero = () => {
               cy="302.659"
               r="133.362"
               transform="rotate(133.319 191.659 302.659)"
-              // fill="url(#FFCE1B_linear_25:217)"
               className="fill-yellow opacity-30"
             />
             <defs>
@@ -322,6 +356,66 @@ const Hero = () => {
           </svg>
         </div>
       </section>
+
+      {/* Admin Authentication Modal */}
+      {showAdminModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-dark">
+            <div className="mb-6 flex justify-between">
+              <h3 className="text-2xl font-bold text-black dark:text-white">Admin Authentication</h3>
+              <button
+                onClick={() => setShowAdminModal(false)}
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              >
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            {error && (
+              <div className="mb-4 text-center text-red-500">
+                {error}
+              </div>
+            )}
+            <form onSubmit={handleAdminSubmit}>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  value={adminName}
+                  onChange={(e) => setAdminName(e.target.value)}
+                  placeholder="Enter your name"
+                  className="w-full rounded-full border border-gray-300 bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-amber-500 dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-amber-500 dark:focus:shadow-none"
+                />
+              </div>
+              <div className="mb-6">
+                <input
+                  type="password"
+                  value={adminCode}
+                  onChange={(e) => setAdminCode(e.target.value)}
+                  placeholder="Enter admin code"
+                  className="w-full rounded-full border border-gray-300 bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-amber-500 dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-amber-500 dark:focus:shadow-none"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full rounded-full bg-amber-500 px-6 py-3 text-base font-medium text-white shadow-submit duration-300 hover:bg-amber-600 dark:shadow-submit-dark"
+              >
+                Sign In
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -15,7 +15,7 @@ const featuresData: Feature[] = [
       "As we follow the programs of the Malagsy ministry of education, we teach the Malagasy language in all its aspects. We teach the language, the culture, and the history of Madagascar. We also teach the history of the Malagasy language and its evolution. ",
   },
   {
-    id: 1,
+    id: 2,
     icon: (
      <FaFlagUsa size={50} color="red"/>
     ),
@@ -24,27 +24,25 @@ const featuresData: Feature[] = [
       "We are opened to everyone whether you are a Malagasy or a foreigner that's why we use the English language as a communication language at school.",
   },
   {
-    id: 1,
+    id: 3,
     icon: (
       <GiBlackFlag size={50} color="blue"/>
-
     ),
     title: "French Language",
     paragraph:
       "We are opened to everyone whether you are a Malagasy or a foreigner that's why we use the French language as a communication language at school.",
   },
   {
-    id: 1,
+    id: 4,
     icon: (
       <FaComputer size={50} color=""/>
-
     ),
     title: "Computer Science",
     paragraph:
       "As a modern school,, we teach computer science to students from grade 1 to 12th grade because nowadays everything you see around is made by the technology so we don't want our students are late for their best future skills",
   },
   {
-    id: 1,
+    id: 5,
     icon: (
       <LuScreenShare size={50} color=""/>
     ),
@@ -53,10 +51,9 @@ const featuresData: Feature[] = [
       "We have a giant screen in the classroom to make the class more interactive and more fun. We use it to show videos, slides, and other materials that can help students understand better.",
   },
   {
-    id: 1,
+    id: 6,
     icon: (
       <ImBooks size={50} color=""/>
-
     ),
     title: "Library",
     paragraph:

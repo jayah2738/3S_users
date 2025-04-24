@@ -1,0 +1,40 @@
+{
+  "common": {
+    "previous": "Previous",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "grade": "Grade",
+    "confirmPassword": "Confirm Password",
+    "submit": "Submit",
+    "error": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email",
+      "passwordMismatch": "Passwords do not match",
+      "invalidCredentials": "Invalid credentials"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "subtitle": "Login to your account for a faster checkout",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up"
+    },
+    "signup": {
+      "title": "Create your account",
+      "subtitle": "Sign up to get started with your learning journey",
+      "haveAccount": "Already have an account?",
+      "signInLink": "Sign in"
+    },
+    "admin": {
+      "title": "Admin Authentication",
+      "name": "Enter your name",
+      "code": "Enter admin code",
+      "invalidCode": "Invalid admin code",
+      "nameRequired": "Please enter your name"
+    }
+  }
+} 

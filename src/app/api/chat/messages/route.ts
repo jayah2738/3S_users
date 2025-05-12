@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     await connectDB();
     const data = await req.json();
     
-    const message = await Message.create({
+    const message = new Message ({
       ...data,
       sender: session.user.id,
     });

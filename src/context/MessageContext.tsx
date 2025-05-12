@@ -7,14 +7,16 @@ interface Message {
   sender: string;
   content: string;
   timestamp: string;
-  type: 'parent' | 'student';
+  type: 'parent' | 'student' | 'admin';
 }
 
 interface MessageContextType {
   parentMessages: Message[];
   studentMessages: Message[];
+  teacherMessages: Message[];
   addParentMessage: (content: string) => Promise<void>;
   addStudentMessage: (content: string) => Promise<void>;
+  addTeacherMessage: (content: string) => Promise<void>;
   updateMessage: (id: string, content: string) => Promise<void>;
   deleteMessage: (id: string) => Promise<void>;
   isLoading: boolean;
@@ -26,8 +28,16 @@ const MessageContext = createContext<MessageContextType | undefined>(undefined);
 export function MessageProvider({ children }: { children: ReactNode }) {
   const [parentMessages, setParentMessages] = useState<Message[]>([]);
   const [studentMessages, setStudentMessages] = useState<Message[]>([]);
+  const [teacherMessages, setTeacherMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchMessages();
+    // Set up polling to refresh messages every 5 seconds
+    const interval = setInterval(fetchMessages, 15000);
+    return () => clearInterval(interval);
+  }, []);
 
   const fetchMessages = async () => {
     try {
@@ -38,6 +48,7 @@ export function MessageProvider({ children }: { children: ReactNode }) {
       const data = await response.json();
       setParentMessages(data.parentMessages || []);
       setStudentMessages(data.studentMessages || []);
+      setTeacherMessages(data.teacherMessages || []);
       setError(null);
     } catch (err) {
       setError('Failed to fetch messages');
@@ -46,13 +57,6 @@ export function MessageProvider({ children }: { children: ReactNode }) {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchMessages();
-    // Set up polling to refresh messages every 5 seconds
-    const interval = setInterval(fetchMessages, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
   const addParentMessage = async (content: string) => {
     try {
@@ -87,11 +91,40 @@ export function MessageProvider({ children }: { children: ReactNode }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content, type: 'student' }),
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to send message');
+      }
+
       const newMessage = await response.json();
       setStudentMessages(prev => [newMessage, ...prev]);
+      setError(null);
     } catch (err) {
       setError('Failed to add message');
       console.error('Error adding message:', err);
+    }
+  };
+
+  const addTeacherMessage = async (content: string) => {
+    try {
+      const response = await fetch('/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content, type: 'admin' })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to send message');
+      }
+
+      const newMessage = await response.json();
+      setTeacherMessages(prev => [newMessage, ...prev]);
+      setError(null);
+    } catch (err) {
+      setError('Failed to send message');
+      console.error('Error sending message:', err);
     }
   };
 
@@ -148,8 +181,10 @@ export function MessageProvider({ children }: { children: ReactNode }) {
     <MessageContext.Provider value={{
       parentMessages,
       studentMessages,
+      teacherMessages,
       addParentMessage,
       addStudentMessage,
+      addTeacherMessage,
       updateMessage,
       deleteMessage,
       isLoading,

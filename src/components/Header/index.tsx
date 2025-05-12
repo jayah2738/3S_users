@@ -6,7 +6,12 @@ import { useEffect, useState } from "react";
 import ThemeToggler from "./ThemeToggler";
 import menuData from "./menuData";
 
-const Header = () => {
+interface HeaderProps {
+  username?: string;
+  grade?: string;
+}
+
+const Header = ({ username, grade }: HeaderProps) => {
   // Navbar toggle
   const [navbarOpen, setNavbarOpen] = useState(false);
   const navbarToggleHandler = () => {

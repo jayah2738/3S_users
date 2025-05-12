@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 export async function GET() {
   try {
-    const [parentMessages, studentMessages] = await Promise.all([
+    const [parentMessages, studentMessages, teacherMessages] = await Promise.all([
       prisma.message.findMany({
         where: { type: 'parent' },
         orderBy: { timestamp: 'desc' }
@@ -11,10 +13,14 @@ export async function GET() {
       prisma.message.findMany({
         where: { type: 'student' },
         orderBy: { timestamp: 'desc' }
+      }),
+      prisma.message.findMany({
+        where: { type: 'admin' },
+        orderBy: { timestamp: 'desc' }
       })
     ]);
 
-    return NextResponse.json({ parentMessages, studentMessages });
+    return NextResponse.json({ parentMessages, studentMessages, teacherMessages });
   } catch (error) {
     console.error('Error fetching messages:', error);
     return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 });
@@ -23,17 +29,27 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { content, type } = await request.json();
+    const session = await getServerSession(authOptions);
     
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const body = await request.json();
+    const { content, type } = body;
+
     if (!content || !type) {
-      return NextResponse.json({ error: 'Content and type are required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
     }
 
     const message = await prisma.message.create({
       data: {
         content,
+        sender: session.user.name,
         type,
-        sender: '3S Admin',
         timestamp: new Date()
       }
     });
@@ -41,7 +57,10 @@ export async function POST(request: Request) {
     return NextResponse.json(message);
   } catch (error) {
     console.error('Error creating message:', error);
-    return NextResponse.json({ error: 'Failed to create message' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to create message' },
+      { status: 500 }
+    );
   }
 }
 

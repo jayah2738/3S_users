@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
 import Sidebar from '@/components/Sidebar';
 import { Bars3Icon, XMarkIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 
@@ -10,25 +11,27 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [adminName, setAdminName] = useState('');
 
   useEffect(() => {
-    // Check if user is admin
-    const isAdmin = localStorage.getItem('isAdmin') === 'true';
-    const name = localStorage.getItem('adminName') || '';
-    setAdminName(name);
-
-    if (!isAdmin) {
-      router.push('/');
+    if (status === 'unauthenticated') {
+      router.push('/signin');
     }
-  }, [router]);
+  }, [status, router]);
 
-  const handleSignOut = () => {
-    localStorage.removeItem('adminName');
-    localStorage.removeItem('isAdmin');
-    router.push('/');
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    router.push('/signin');
   };
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (!session?.user) {
+    return null;
+  }
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
@@ -61,7 +64,7 @@ export default function AdminLayout({
         <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 dark:border-gray-700 dark:bg-gray-dark">
           <div className="flex items-center">
             <h2 className="text-lg font-semibold text-black dark:text-white">
-              Welcome, {adminName}
+              Welcome, {session.user.name}
             </h2>
           </div>
           <button

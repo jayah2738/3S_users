@@ -10,7 +10,8 @@ import {
   ChartBarIcon, 
   CogIcon,
   SunIcon,
-  MoonIcon
+  MoonIcon,
+  AcademicCapIcon
 } from '@heroicons/react/24/outline';
 
 const Sidebar = () => {
@@ -20,6 +21,7 @@ const Sidebar = () => {
   const navigation = [
     { name: 'Dashboard', href: '/admin/dashboard', icon: HomeIcon },
     { name: 'Students', href: '/admin/students', icon: UserGroupIcon },
+    { name: 'Teachers', href: '/admin/teachers', icon: AcademicCapIcon },
     { name: 'Courses', href: '/admin/courses', icon: BookOpenIcon },
     { name: 'Schedule', href: '/admin/schedule', icon: CalendarIcon },
     { name: 'Reports', href: '/admin/reports', icon: ChartBarIcon },

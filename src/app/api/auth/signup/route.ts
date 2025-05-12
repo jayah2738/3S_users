@@ -1,42 +1,120 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
-import User from '@/models/User';
+import prisma from '@/lib/prisma';
+import { hash } from 'bcryptjs';
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    await connectDB();
+    const { username, password, grade, gender, fullName } = await request.json();
 
-    const { username, password, grade } = await req.json();
-
-    // Check if user exists
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
+    if (!username || !password || !grade || !gender || !fullName) {
       return NextResponse.json(
-        { error: 'Username already exists' },
+        { error: 'All fields are required' },
         { status: 400 }
       );
     }
 
-    // Create new user
-    const user = await User.create({
-      username,
-      password,
-      grade,
-      role: 'student', // Default role
+    // Check if the student exists in the database
+    const existingStudent = await prisma.student.findFirst({
+      where: { 
+        OR: [
+          {
+            username: {
+              contains: username.toLowerCase()
+            },
+            grade: {
+              contains: grade.toLowerCase()
+            },
+            gender: {
+              contains: gender.toLowerCase()
+            },
+            fullName: {
+              contains: fullName.toLowerCase()
+            }
+          },
+          {
+            username: {
+              contains: username.trim().toLowerCase()
+            },
+            grade: {
+              contains: grade.trim().toLowerCase()
+            },
+            gender: {
+              contains: gender.trim().toLowerCase()
+            },
+            fullName: {
+              contains: fullName.trim().toLowerCase()
+            }
+          }
+        ]
+      },
+      select: {
+        id: true,
+        password: true,
+        isActive: true,
+        gradeRelation: {
+          select: {
+            id: true
+          }
+        }
+      }
+    });
+
+    if (!existingStudent) {
+      return NextResponse.json(
+        { error: 'Student not found. Please verify your details and try again.' },
+        { status: 404 }
+      );
+    }
+
+    if (!existingStudent.isActive) {
+      return NextResponse.json(
+        { error: 'Your account is not active. Please contact your administrator.' },
+        { status: 403 }
+      );
+    }
+
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { username }
+    });
+
+    if (existingUser) {
+      return NextResponse.json(
+        { error: 'User already exists' },
+        { status: 400 }
+      );
+    }
+
+    // Hash the password
+    const hashedPassword = await hash(password, 10);
+
+    // Create user with the hashed password
+    const user = await prisma.user.create({
+      data: {
+        username,
+        password: hashedPassword,
+        role: 'USER'
+      }
+    });
+
+    // Update student's password
+    await prisma.student.update({
+      where: { id: existingStudent.id },
+      data: { password: hashedPassword }
     });
 
     return NextResponse.json({
       message: 'User created successfully',
       user: {
-        id: user._id,
+        id: user.id,
         username: user.username,
-        grade: user.grade,
-      },
+        role: user.role
+      }
     });
   } catch (error) {
     console.error('Signup error:', error);
     return NextResponse.json(
-      { error: 'Error creating user' },
+      { error: 'Failed to create user' },
       { status: 500 }
     );
   }

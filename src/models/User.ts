@@ -1,5 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Model } from 'mongoose';
 import bcrypt from 'bcryptjs';
+
+interface IUser extends Document {
+  username: string;
+  password: string;
+  grade: string;
+  role: 'student' | 'admin';
+  createdAt: Date;
+}
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -40,4 +48,6 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-export default mongoose.models.User || mongoose.model('User', userSchema); 
+const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
+
+export default User; 

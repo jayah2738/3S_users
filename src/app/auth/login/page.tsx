@@ -5,18 +5,18 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [grade, setGrade] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const result = await signIn('credentials', {
         redirect: false,
-        username: email,
+        username: username,
         password,
         grade,
       });
@@ -77,9 +77,9 @@ const LoginPage = () => {
                 <form onSubmit={handleSubmit}>
                   <div className="mb-8">
                     <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                       placeholder="Enter your Email"
                       className="border-stroke w-full rounded-full border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-amber-500 dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-amber-500 dark:focus:shadow-none"
                     />
@@ -109,8 +109,8 @@ const LoginPage = () => {
                   </div>
                 </form>
                 <p className="text-center text-base font-medium text-body-color">
-                  Don't have an account?{" "}
-                  <Link href="/auth/signup" className="text-primary hover:underline">
+                  Don&lsquo;t have an account?{" "}
+                  <Link href="/auth/signup" className="text-green-500 hover:underline">
                     Sign up
                   </Link>
                 </p>

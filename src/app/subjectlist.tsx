@@ -1,20 +1,57 @@
 import React from "react";
+import { motion } from "framer-motion";
 
-const subjectlist = ({ programslists, subject, bglink }) => {
+interface SubjectListProps {
+  programslists: string;
+  subject: string;
+  bglink: string;
+}
+
+const SubjectList: React.FC<SubjectListProps> = ({ programslists, subject }) => {
+  const firstLetter = subject.charAt(0).toUpperCase();
+
   return (
-    <div
-      className="mt-8 flex h-36 w-80 flex-col items-center justify-between rounded-lg border  py-4 shadow-md shadow-amber-500 hover:shadow-green-500 hover:translate-x-6 transition duration-300 ease-in-out "
-      style={{
-        background: `url(${bglink})`,
-        backgroundSize: "cover",
-      }}
+    <motion.div
+      whileHover={{ scale: 1.07 }}
+      whileTap={{ scale: 0.98 }}
+      className="group relative overflow-hidden bg-gradient-to-l from-pink-700 to-blue-700 rounded-xl border-l-4 hover:border-amber-500 shadow-lg transition-all duration-300 hover:shadow-xl"
     >
-      <a href={programslists}>
-        <div className="mb-4 flex gap-4">
-          <p className="text-4xl font-bold text-gray-500 mt-8 ">{subject}</p>
+      <a href={programslists} className="relative block h-42 p-6">
+        <div className="flex h-full items-center space-x-4">
+          {/* First Letter Logo */}
+          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border-2 border-white/20 group-hover:border-amber-400 transition-colors">
+            <span className="text-2xl font-bold text-white group-hover:text-amber-400 transition-colors">
+              {firstLetter}
+            </span>
+          </div>
+
+          {/* Subject Content */}
+          <div className="flex-grow">
+            <div className="space-y-2">
+              <h3 className="text-2xl font-bold text-white group-hover:text-amber-400 transition-colors">
+                {subject}
+              </h3>
+              <p className="text-sm text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity">
+                Click to explore lessons and exercises
+              </p>
+            </div>
+            
+            <div className="flex items-center space-x-2 text-white/80 group-hover:text-amber-400 transition-colors mt-2">
+              <span className="text-sm font-medium">View Course</span>
+              <svg 
+                className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
         </div>
       </a>
-    </div>
+    </motion.div>
   );
 };
-export default subjectlist;
+
+export default SubjectList;

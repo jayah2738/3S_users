@@ -1,6 +1,6 @@
 'use client'
-import Link from "next/link";
-import { motion,Variants } from "framer-motion";
+// import Link from "next/link";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -32,8 +32,8 @@ const Hero = () => {
       localStorage.setItem('isAdmin', 'true');
       
       // Close modal and redirect to admin dashboard
-      setShowAdminModal(false);
       router.push("/admin/dashboard");
+      setShowAdminModal(false);
     } catch (error) {
       setError("An error occurred during authentication");
     }
@@ -58,11 +58,18 @@ const Hero = () => {
                     duration: 1,
                     delay: .5
                 }}
-                  className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight"
+                  className="mb-5"
                 >
-                  Welcome to the courses of{" "}
-                  <span
-                  className="text-amber-500">SAMSRIAH SCHOOL</span>
+                  <h1 className="relative text-3xl font-extrabold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
+                    Welcome to the courses of{" "}
+                    <span className="relative inline-block">
+                      <span className="relative z-10 bg-gradient-to-r from-amber-500 to-yellow-400 bg-clip-text text-transparent">
+                        SAMSRIAH SCHOOL
+                      </span>
+                      <span className="absolute left-0 -bottom-0.5 h-[6px] w-full bg-gradient-to-r from-amber-500/40 to-yellow-400/40 blur-sm"></span>
+                      <span className="absolute left-0 -bottom-0.5 h-[3px] w-full bg-gradient-to-r from-amber-500 to-yellow-400"></span>
+                    </span>
+                  </h1>
                 </motion.div>
                 <motion.p 
                 initial={{ opacity: 0,x:-500 }}
@@ -90,12 +97,12 @@ const Hero = () => {
                      duration: 1,
                      delay: .8
                  }}
-                    href="/auth/login"
+                    href="/auth/signin"
                     className="rounded-full border-2 border-amber-500 bg-amber-500 px-8 py-4 text-base font-semibold text-white hover:border-2 hover:border-amber-500 hover:bg-amber-500 hover:text-amber-500 dark:bg-transparent dark:text-white dark:hover:border-2 dark:hover:border-amber-500 dark:hover:bg-amber-500"
                   >
                     🔥 Get courses
                   </motion.a>
-                  <motion.button
+                  <motion.a
                    initial={{ opacity: 0,x:-500 }}
                    animate={{ opacity: 1,x:0 }}
                    transition={{
@@ -104,11 +111,11 @@ const Hero = () => {
                      duration: .5,
                      delay: .8
                  }}
-                    onClick={() => setShowAdminModal(true)}
+                    href="/signin"
                     className="inline-block rounded-full bg-black px-8 py-4 font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:border-2 dark:border-white dark:bg-white dark:text-amber-500 dark:hover:bg-transparent dark:hover:text-amber-500"
                   >
                     SignIn as Admin
-                  </motion.button>
+                  </motion.a>
                 </div>
               </div>
             </div>

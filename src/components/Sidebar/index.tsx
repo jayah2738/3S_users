@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation';
 const navigation = [
   { name: 'Dashboard', href: '/admin/dashboard', icon: HomeIcon },
   { name: 'Students', href: '/admin/students', icon: UserGroupIcon },
+  { name: 'Teachers', href: '/admin/teachers', icon: AcademicCapIcon },
   { name: 'Courses', href: '/admin/courses', icon: AcademicCapIcon },
   { name: 'Schedule', href: '/admin/schedule', icon: ClockIcon },
   { name: 'Parent Info', href: '/admin/parent-info', icon: ChatBubbleLeftRightIcon },

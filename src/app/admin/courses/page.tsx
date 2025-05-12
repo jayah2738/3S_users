@@ -173,9 +173,10 @@ export default function CoursesPage() {
 
         const response = await fetch(`/api/admin/materials?${params.toString()}`);
         const data = await response.json();
-        setMaterials(data);
+        setMaterials(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error('Error fetching materials:', error);
+        setMaterials([]);
       } finally {
         setIsSearching(false);
       }

@@ -1,41 +1,30 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { compare } from "bcryptjs";
 import prisma from "./prisma";
-
-declare module "next-auth" {
-  interface User {
-    id: string;
-    name: string;
-    isAdmin: boolean;
-    role?: string;
-  }
-}
+import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: "credentials",
       credentials: {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials?.username || !credentials?.password) {
           return null;
         }
 
-        const user = await prisma.admin.findUnique({
-          where: {
-            name: credentials.username
-          }
+        const user = await prisma.user.findUnique({
+          where: { username: credentials.username }
         });
 
         if (!user) {
           return null;
         }
 
-        const isPasswordValid = await compare(credentials.password, user.password);
+        const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
 
         if (!isPasswordValid) {
           return null;
@@ -43,9 +32,9 @@ export const authOptions: NextAuthOptions = {
 
         return {
           id: user.id,
-          name: user.name,
-          isAdmin: true,
-          role: "admin"
+          name: user.username,
+          email: user.username,
+          role: user.role
         };
       }
     })
@@ -59,21 +48,15 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        return {
-          ...token,
-          isAdmin: user.isAdmin
-        };
+        token.role = user.role as string;
       }
       return token;
     },
     async session({ session, token }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          isAdmin: token.isAdmin
-        }
-      };
+      if (session.user) {
+        session.user.role = token.role as string;
+      }
+      return session;
     }
   }
 }; 

@@ -1,0 +1,100 @@
+{
+  "sections": [
+    {
+      "name": "Preschool",
+      "grades": [
+        {
+          "name": "Pre-K",
+          "lessons": [
+            {
+              "id": "uuid-for-lesson-1",
+              "subject": "Alphabet",
+              "pdfUrl": "/pdfs/preschool/prek/alphabet.pdf",
+              "videoUrl": "/videos/preschool/prek/alphabet.mp4"
+            }
+          ],
+          "exercises": [
+            {
+              "id": "uuid-for-exercise-1",
+              "subject": "Counting",
+              "pdfUrl": "/pdfs/preschool/prek/counting.pdf",
+              "videoUrl": "/videos/preschool/prek/counting.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Primary School",
+      "grades": [
+        {
+          "name": "Grade 1",
+          "lessons": [
+            {
+              "id": "uuid-for-lesson-2",
+              "subject": "Basic Math",
+              "pdfUrl": "/pdfs/primary/grade1/math.pdf",
+              "videoUrl": "/videos/primary/grade1/math.mp4"
+            }
+          ],
+          "exercises": [
+            {
+              "id": "uuid-for-exercise-2",
+              "subject": "Reading",
+              "pdfUrl": "/pdfs/primary/grade1/reading.pdf",
+              "videoUrl": "/videos/primary/grade1/reading.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Middle School",
+      "grades": [
+        {
+          "name": "Grade 6",
+          "lessons": [
+            {
+              "id": "uuid-for-lesson-3",
+              "subject": "Algebra",
+              "pdfUrl": "/pdfs/middle/grade6/algebra.pdf",
+              "videoUrl": "/videos/middle/grade6/algebra.mp4"
+            }
+          ],
+          "exercises": [
+            {
+              "id": "uuid-for-exercise-3",
+              "subject": "Geometry",
+              "pdfUrl": "/pdfs/middle/grade6/geometry.pdf",
+              "videoUrl": "/videos/middle/grade6/geometry.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "High School",
+      "grades": [
+        {
+          "name": "Grade 9",
+          "lessons": [
+            {
+              "id": "uuid-for-lesson-4",
+              "subject": "Physics",
+              "pdfUrl": "/pdfs/high/grade9/physics.pdf",
+              "videoUrl": "/videos/high/grade9/physics.mp4"
+            }
+          ],
+          "exercises": [
+            {
+              "id": "uuid-for-exercise-4",
+              "subject": "Chemistry",
+              "pdfUrl": "/pdfs/high/grade9/chemistry.pdf",
+              "videoUrl": "/videos/high/grade9/chemistry.mp4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

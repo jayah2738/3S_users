@@ -1,0 +1,20 @@
+
+.cursor {
+  width: 30px;
+  height: 30px;
+  position: fixed;
+  background-image: url('../../../public/images/CCI/cci1.png');
+  background-size: 100%;
+  pointer-events: none; /* Prevent interaction */
+  transform: translate(-15%, -5%);
+  transition: transform 0.1s ease-out;
+  z-index: 9999; /* Ensure it stays on top */
+  padding: 1rem;
+}
+
+/* Hide cursor on mobile */
+@media (max-width: 768px) {
+  .cursor {
+    display: none;
+  }
+}

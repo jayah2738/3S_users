@@ -98,7 +98,7 @@ const Hero = () => {
                      delay: .8
                  }}
                     href="/auth/signin"
-                    className="rounded-full border-2 border-amber-500 bg-amber-500 px-8 py-4 text-base font-semibold text-white hover:border-2 hover:border-amber-500 hover:bg-amber-500 hover:text-amber-500 dark:bg-transparent dark:text-white dark:hover:border-2 dark:hover:border-amber-500 dark:hover:bg-amber-500"
+                    className="rounded-full border-2 border-amber-500 bg-amber-500 px-8 py-4 text-base font-semibold text-white hover:border-2 hover:border-amber-500 hover:bg-white hover:text-amber-500 dark:bg-transparent dark:text-white dark:hover:border-2 dark:hover:border-amber-500 dark:hover:bg-amber-500"
                   >
                     🔥 Get courses
                   </motion.a>
@@ -112,7 +112,7 @@ const Hero = () => {
                      delay: .8
                  }}
                     href="/signin"
-                    className="inline-block rounded-full bg-black px-8 py-4 font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:border-2 dark:border-white dark:bg-white dark:text-amber-500 dark:hover:bg-transparent dark:hover:text-amber-500"
+                    className="inline-block border rounded-full bg-black px-8 py-4 font-semibold text-white duration-300 ease-in-out hover:text-black hover:border-black hover:bg-white dark:border-2 dark:border-white dark:bg-white dark:text-amber-500 dark:hover:bg-transparent dark:hover:text-amber-500"
                   >
                     SignIn as Admin
                   </motion.a>

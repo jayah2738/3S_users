@@ -3,6 +3,7 @@ import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
+import { cookies } from 'next/headers';
 
 // Extend the User type to include our custom fields
 declare module "next-auth" {
@@ -44,7 +45,8 @@ export const authOptions: AuthOptions = {
               data: {
                 username: "haja",
                 password: await bcrypt.hash("justletitbe", 10),
-                role: 'ADMIN'
+                role: 'ADMIN',
+                isSuperAdmin: true
               }
             });
           }
@@ -244,6 +246,7 @@ export const authOptions: AuthOptions = {
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.name = user.name;
         token.fullName = user.fullName;
         token.grade = user.grade;
         token.level = user.level;
@@ -255,6 +258,7 @@ export const authOptions: AuthOptions = {
       if (session.user) {
         (session.user as any).id = token.id;
         (session.user as any).role = token.role;
+        (session.user as any).name = token.name;
         (session.user as any).fullName = token.fullName;
         (session.user as any).grade = token.grade;
         (session.user as any).level = token.level;
@@ -262,6 +266,28 @@ export const authOptions: AuthOptions = {
       }
       return session;
     },
+  },
+  events: {
+    async signIn({ user }) {
+      if (user.role === 'ADMIN') {
+        const response = new Response(null, {
+          status: 200,
+          headers: {
+            'Set-Cookie': `admin=true; Path=/; HttpOnly; SameSite=Lax`
+          }
+        });
+        return response;
+      }
+    },
+    async signOut() {
+      cookies().set('admin', '', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/',
+        maxAge: 0
+      });
+    }
   },
   debug: true, // Enable debug mode
 };

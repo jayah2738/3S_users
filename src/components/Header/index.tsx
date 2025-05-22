@@ -177,7 +177,7 @@ const Header = ({ username, grade }: HeaderProps) => {
                   Sign Up
                 </Link> */}
                 <div>
-                  <ThemeToggler />
+                  {/*<ThemeToggler />*/}
                 </div>
               </div>
             </div>

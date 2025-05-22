@@ -6,11 +6,12 @@ import AuthProvider from '@/components/auth/AuthProvider';
 import Navigation from '@/components/Navigation';
 import type { Metadata } from "next";
 import { MessageProvider } from "@/context/MessageContext";
+import CustomCursor from "@/components/CursorCustom/CursorCustom";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "School Admin",
+  title: "School Users",
   description: "School Administration System",
 };
 
@@ -31,6 +32,7 @@ export default function RootLayout({
         <AuthProvider>
           <MessageProvider>
             <main>{children}</main>
+            <CustomCursor/>
             <ScrollToTop />
           </MessageProvider>
         </AuthProvider>

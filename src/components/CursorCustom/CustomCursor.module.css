@@ -1,15 +1,150 @@
-
 .cursor {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   position: fixed;
-  background-image: url('../../../public/images/CCI/cci1.png');
-  background-size: 100%;
-  pointer-events: none; /* Prevent interaction */
-  transform: translate(-15%, -5%);
-  transition: transform 0.1s ease-out;
-  z-index: 9999; /* Ensure it stays on top */
-  padding: 1rem;
+  pointer-events: none;
+  z-index: 9999;
+  background: hsl(60, 100%, 50%); /* Yellow */
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease;
+  transform-origin: center;
+  border-radius: 50%;
+  top: -20px;
+  left: -20px;
+  will-change: transform;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 0, 0.5));
+}
+
+.cursorRing {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  background: transparent;
+  will-change: transform;
+}
+
+.cursorDot {
+  width: 8px;
+  height: 8px;
+  background: hsl(0, 0%, 100%); /* White */
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  will-change: transform, background-color;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+}
+
+.cursorBullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: orbit 2s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: transform, opacity, background-color;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+}
+
+/* Rotating rings */
+.cursorRing::before,
+.cursorRing::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid hsl(0, 100%, 50%); /* Red */
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.8));
+}
+
+.cursorRing::before {
+  animation: rotateRing1 3s linear infinite;
+}
+
+.cursorRing::after {
+  animation: rotateRing2 3s linear infinite;
+}
+
+/* Hover state */
+.cursor.hover {
+  animation: hueRotate 3s linear infinite;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 0, 0.8));
+}
+
+.cursor.hover .cursorRing {
+  transform: translate(-50%, -50%) scale(1.5);
+  animation: hueRotate 3s linear infinite;
+}
+
+.cursor.hover .cursorDot {
+  transform: translate(-50%, -50%) scale(0.5);
+  animation: hueRotate 3s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+}
+
+.cursor.hover .cursorBullet {
+  opacity: 1;
+  animation: orbit 2s linear infinite, hueRotate 3s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+}
+
+.cursor.hover .cursorRing::before,
+.cursor.hover .cursorRing::after {
+  animation-duration: 2s;
+  filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.9));
+}
+
+/* Color Change Animations */
+@keyframes hueRotate {
+  0% {
+    filter: hue-rotate(0deg) drop-shadow(0 0 8px rgba(255, 255, 0, 0.8));
+  }
+  100% {
+    filter: hue-rotate(360deg) drop-shadow(0 0 8px rgba(255, 255, 0, 0.8));
+  }
+}
+
+/* Rotating Rings Animations */
+@keyframes rotateRing1 {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) translateX(20px) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) translateX(20px) rotate(-360deg);
+  }
+}
+
+@keyframes rotateRing2 {
+  0% {
+    transform: translate(-50%, -50%) rotate(180deg) translateX(20px) rotate(-180deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(540deg) translateX(20px) rotate(-540deg);
+  }
+}
+
+/* Orbit Animation */
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(20px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(20px) rotate(-360deg);
+  }
 }
 
 /* Hide cursor on mobile */
@@ -17,4 +152,15 @@
   .cursor {
     display: none;
   }
+}
+
+/* Custom hover effects for different elements */
+a:hover ~ .cursor,
+button:hover ~ .cursor {
+  transform: scale(2);
+}
+
+/* Smooth transition for all cursor elements */
+.cursor * {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

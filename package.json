@@ -1,5 +1,5 @@
 {
-  "name": "startup-nextjs-template",
+  "name": "samsriah-school-app",
   "version": "2.1.0",
   "private": true,
   "scripts": {
@@ -21,6 +21,7 @@
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
     "chart.js": "^4.4.9",
+    "cloudinary": "^2.6.1",
     "cookies-next": "^5.1.0",
     "cors": "^2.8.5",
     "eslint": "^8.56.0",
@@ -32,8 +33,10 @@
     "lodash": "^4.17.21",
     "mongodb": "^6.15.0",
     "mongoose": "^8.13.2",
+    "multer": "^1.4.5-lts.2",
     "next": "^15.3.0",
     "next-auth": "^4.24.11",
+    "next-connect": "^1.0.0",
     "next-i18next": "^15.4.2",
     "next-themes": "^0.2.1",
     "nodemailer": "^6.10.1",

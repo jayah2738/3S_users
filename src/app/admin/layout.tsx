@@ -63,8 +63,8 @@ export default function AdminLayout({
         {/* Topbar */}
         <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 dark:border-gray-700 dark:bg-gray-dark">
           <div className="flex items-center">
-            <h2 className="text-lg font-semibold text-black dark:text-white">
-              Welcome, {session.user.name}
+            <h2 className="text-lg font-semibold text-black ml-10 dark:text-white">
+               Welcome, <span className='text-green-500 capitalize'>{session.user.name}</span>
             </h2>
           </div>
           <button

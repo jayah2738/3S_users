@@ -27,6 +27,18 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // Set admin cookie if user is admin
+  if (token?.role === 'ADMIN') {
+    const response = NextResponse.next();
+    response.cookies.set('admin', 'true', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/'
+    });
+    return response;
+  }
+
   return NextResponse.next();
 }
 
@@ -35,7 +47,8 @@ export const config = {
   matcher: [
     '/admin/:path*',
     '/courses/:path*',
-    '/auth/signin'
+    '/auth/signin',
+    '/api/admin/:path*'
   ]
 }; 
 

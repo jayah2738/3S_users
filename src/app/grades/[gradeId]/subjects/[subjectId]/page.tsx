@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
-import UserHeader from '@/app/userheader';
+// import UserHeader from '@/app/userheader';
 import { useParams, useRouter } from 'next/navigation';
 import { Programlistdata } from '@/components/coursesdata/Programlistdata';
 import * as pdfjsLib from 'pdfjs-dist';
@@ -13,9 +13,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.js';
 
 const ProgramPage = () => {
   const { data: session, status } = useSession();
-  const params = useParams();
+  const { gradeId, subjectId } = useParams<{ gradeId: string; subjectId: string }>();
+
   const router = useRouter();
-  const program = Programlistdata.find(p => p.id === params.program_id);
+  const program = Programlistdata.find(p => p.id === subjectId);
   const [pdfError, setPdfError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
@@ -103,7 +104,7 @@ const ProgramPage = () => {
   };
 
   const handleGoBack = () => {
-    router.push(`/courses/${params.grade}/${params.grade_id}`);
+    router.push(`/grades/${gradeId}/subjects/`);
   };
 
   if (status === 'loading') {
@@ -130,22 +131,22 @@ const ProgramPage = () => {
     );
   }
 
-  if (!program) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-        <UserHeader username={session.user.name || "Guest"} grade={params.grade as string} />
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Program not found</h1>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (!program) {
+  //   return (
+  //     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+  //       {/* <UserHeader username={session.user.name || "Guest"} grade={params.grade as string} /> */}
+  //       <div className="container mx-auto px-4 py-8">
+  //         <div className="text-center">
+  //           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Program not found</h1>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      <UserHeader username={session.user.name || "Guest"} grade={params.grade as string} />
+      {/* <UserHeader username={session.user.name || "Guest"} grade={params.grade as string} /> */}
       
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 mt-12">
@@ -170,10 +171,10 @@ const ProgramPage = () => {
             Back to Programs
           </button>
           <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
-            {program.title}
+            {/* {program.title} */}
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            Program {program.num} - Grade {params.grade}
+            {/* Program {program.num} - {gradeId} */}
           </p>
         </div>
 
@@ -187,7 +188,7 @@ const ProgramPage = () => {
               <iframe
                 width="100%"
                 height="100%"
-                src="https://www.youtube.com/watch?v=ZcO4KuriDU8"
+                src="https://www.youtube.com/embed/ZcO4KuriDU8"
                 title="Example Video"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -266,3 +267,163 @@ const ProgramPage = () => {
 };
 
 export default ProgramPage; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 'use client';
+
+// import React, { useEffect, useState } from 'react';
+// import { useParams, useRouter } from 'next/navigation';
+// import { CourseContent } from '@/lib/cloudinary';
+// import { getGradeById } from '@/lib/gradeData';
+// import { ChevronLeftIcon } from '@heroicons/react/24/outline';
+
+// export default function SubjectPage() {
+//   const params = useParams();
+//   const router = useRouter();
+//   const [courses, setCourses] = useState<CourseContent[]>([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState<string | null>(null);
+
+//   useEffect(() => {
+//     const fetchCourses = async () => {
+//       try {
+//         const response = await fetch(
+//           `/api/courses?gradeId=${params.gradeId}&subjectId=${params.subjectId}`
+//         );
+//         if (!response.ok) throw new Error('Failed to fetch courses');
+//         const data = await response.json();
+//         setCourses(data);
+//       } catch (err) {
+//         setError(err instanceof Error ? err.message : 'An error occurred');
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchCourses();
+//   }, [params.gradeId, params.subjectId]);
+
+//   const grade = getGradeById(params.gradeId as string);
+//   const subject = grade?.subjects.find((s) => s.id === params.subjectId);
+
+//   const handlePrevious = () => {
+//     router.push(`/grades/${params.gradeId}`);
+//   };
+
+//   if (loading) {
+//     return (
+//       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+//         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
+//       </div>
+//     );
+//   }
+
+//   if (error) {
+//     return (
+//       <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+//         <div className="text-red-500">{error}</div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-12">
+//       <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+//         <div className="flex justify-around place-items-center">
+//           <button
+//             onClick={handlePrevious}
+//             className="flex items-center text-amber-500 hover:text-amber-600 transition-colors mb-8 group"
+//           >
+//             <ChevronLeftIcon className="h-6 w-6 mr-2 group-hover:-translate-x-1 transition-transform" />
+//             <span>Back to {grade?.name}</span>
+//           </button>
+
+//           <div className="text-center mb-12">
+//             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+//               {subject?.name}
+//             </h1>
+//             <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
+//               {subject?.description}
+//             </p>
+//           </div>
+//         </div>
+
+//         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+//           {courses.map((course) => (
+//             <div
+//               key={course.id}
+//               className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
+//             >
+//               <div className="p-6">
+//                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+//                   {course.title}
+//                 </h3>
+//                 {course.description && (
+//                   <p className="text-gray-600 dark:text-gray-400 mb-4">
+//                     {course.description}
+//                   </p>
+//                 )}
+//                 <div className="space-y-4">
+//                   {course.pdfUrl && (
+//                     <a
+//                       href={course.pdfUrl}
+//                       target="_blank"
+//                       rel="noopener noreferrer"
+//                       className="block w-full text-center px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors"
+//                     >
+//                       View PDF
+//                     </a>
+//                   )}
+//                   {course.videoUrl && (
+//                     <a
+//                       href={course.videoUrl}
+//                       target="_blank"
+//                       rel="noopener noreferrer"
+//                       className="block w-full text-center px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors"
+//                     >
+//                       Watch Video
+//                     </a>
+//                   )}
+//                 </div>
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+
+
+
+//         {courses.length === 0 && (
+//           <div className="text-center py-12">
+//             <p className="text-gray-600 dark:text-gray-400">
+//               No course content available yet.
+//             </p>
+//           </div>
+//         )}
+
+        
+//       </div>
+//     </div>
+//   );
+// } 

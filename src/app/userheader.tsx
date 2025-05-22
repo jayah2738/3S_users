@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import ThemeToggler from "@/components/Header/ThemeToggler";
-import { FiUser, FiBook, FiHome, FiLogOut } from 'react-icons/fi';
+import { FiUser, FiBook, FiHome, FiLogOut, FiX } from 'react-icons/fi';
 
 interface HeaderProps {
   username?: string;
@@ -13,6 +13,7 @@ interface HeaderProps {
 
 const UserHeader = ({ username, grade }: HeaderProps) => {
   const [sticky, setSticky] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -22,6 +23,10 @@ const UserHeader = ({ username, grade }: HeaderProps) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -87,7 +92,7 @@ const UserHeader = ({ username, grade }: HeaderProps) => {
                 <FiUser className="w-5 h-5 text-amber-500" />
                 <div className="flex flex-col">
                   <span className="text-sm font-medium text-gray-800 dark:text-white">{username}</span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">Grade {grade}</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400"> {grade}</span>
                 </div>
               </div>
               
@@ -100,13 +105,77 @@ const UserHeader = ({ username, grade }: HeaderProps) => {
             </div>
 
             {/* Mobile Menu Button */}
-            <button className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
-              <svg className="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+            <button 
+              onClick={toggleMobileMenu}
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+            >
+              {isMobileMenuOpen ? (
+                <FiX className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+              ) : (
+                <svg className="w-6 h-6 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700 bg-white">
+            <nav className="flex flex-col space-y-4">
+              <Link 
+                href="/"
+                className={`flex items-center space-x-2 px-4 py-2 text-sm font-medium transition-colors ${
+                  pathname === '/' 
+                    ? 'text-amber-500' 
+                    : 'text-gray-600 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-500'
+                }`}
+              >
+                <FiHome className="w-5 h-5" />
+                <span>Home</span>
+              </Link>
+              <Link 
+                href={`/lessons/${grade}`}
+                className={`flex items-center space-x-2 px-4 py-2 text-sm font-medium transition-colors ${
+                  pathname.startsWith('/lessons/[grade]') 
+                    ? 'text-amber-500' 
+                    : 'text-gray-600 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-500'
+                }`}
+              >
+                <FiBook className="w-5 h-5" />
+                <span>Lessons</span>
+              </Link>
+              <Link 
+                href={`/exercises/${grade}`}
+                className={`flex items-center space-x-2 px-4 py-2 text-sm font-medium transition-colors ${
+                  pathname.startsWith('/exercises/[grade]') 
+                    ? 'text-amber-500' 
+                    : 'text-gray-600 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-500'
+                }`}
+              >
+                <FiBook className="w-5 h-5" />
+                <span>Exercises</span>
+              </Link>
+              
+              <div className="flex items-center space-x-2 px-4 py-2">
+                <FiUser className="w-5 h-5 text-amber-500" />
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium text-gray-800 dark:text-white">{username}</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">{grade}</span>
+                </div>
+              </div>
+              
+              <Link 
+                href="/api/auth/signout"
+                className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-500"
+              >
+                <FiLogOut className="w-5 h-5" />
+                <span>Sign Out</span>
+              </Link>
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );

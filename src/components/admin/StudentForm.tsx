@@ -216,7 +216,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ student, onSuccess, onClose }
                 value={formData.level}
                 onChange={handleLevelChange}
                 className="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-amber-500 focus:ring-amber-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                required
+                
               >
                 <option value="">Select level</option>
                 {Object.entries(educationLevels).map(([key, { name }]) => (

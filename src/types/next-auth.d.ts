@@ -9,6 +9,10 @@ declare module 'next-auth' {
       name?: string;
       email?: string;
       image?: string;
+      fullName?: string;
+      grade?: string;
+      level?: string;
+      isSuperAdmin?: boolean;
     } & DefaultSession['user'];
   }
 
@@ -16,5 +20,9 @@ declare module 'next-auth' {
     id: string;
     name: string;
     role: string;
+    fullName?: string;
+    grade?: string;
+    level?: string;
+    isSuperAdmin?: boolean;
   }
 } 

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Logo from '../../../public/images/logo/3s.png'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 export default function SignIn() {
@@ -39,22 +40,22 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-amber-50 to-amber-100 dark:from-gray-900 dark:to-gray-800">
-      <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-xl dark:bg-gray-800">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-pink-500 to-blue-500 dark:from-gray-900 dark:to-gray-800">
+      <div className="w-full max-w-md space-y-8 rounded-2xl border-white p-8 ">
         <div className="text-center">
-          <div className="mx-auto h-16 w-16">
+          <div className="mx-auto h-[80px] w-[80px]">
             <Image
-              src="/logo.png"
+              src={Logo}
               alt="School Logo"
-              width={64}
-              height={64}
-              className="mx-auto"
+              width={100}
+              height={100}
+              className="mx-auto rounded-full"
             />
           </div>
-          <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <h2 className="mt-6 text-3xl font-bold tracking-tight text-white dark:text-white">
             Admin Portal
           </h2>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-sm text-white dark:text-gray-400">
             Sign in to access the admin dashboard
           </p>
         </div>
@@ -78,7 +79,7 @@ export default function SignIn() {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-amber-500 dark:bg-gray-700 dark:text-white dark:ring-gray-600 dark:placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                className="relative block w-full bg-transparent placeholder:text-white rounded-md border-b-2 focus:border-0 p-2 text-gray-900 ring-inset ring-amber-500 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-green-500 outline-none focus:rounded-full dark:bg-gray-700 dark:text-white dark:ring-gray-600 dark:placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 placeholder="Username"
               />
             </div>
@@ -94,7 +95,7 @@ export default function SignIn() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-amber-500 dark:bg-gray-700 dark:text-white dark:ring-gray-600 dark:placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                className="relative block bg-transparent placeholder:text-white w-full border-b-2 rounded-md outline-none p-2 text-gray-900 focus:border-0 ring-inset ring-amber-500 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-green-500 focus:rounded-full dark:bg-gray-700 dark:text-white dark:ring-gray-600 dark:placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 placeholder="Password"
               />
               <button
@@ -111,11 +112,11 @@ export default function SignIn() {
             </div>
           </div>
 
-          <div>
+          <div className='flex w-full place-items-center justify-center'>
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative flex w-full justify-center rounded-md bg-amber-500 px-3 py-2 text-sm font-semibold text-white hover:bg-amber-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group relative flex w-[70%] justify-center rounded-full bg-amber-500 px-3 py-3 text-sm font-semibold text-white hover:bg-amber-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Signing in...' : 'Sign in'}
             </button>

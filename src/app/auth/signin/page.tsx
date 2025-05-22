@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from 'framer-motion';
 import GradeSelect from '@/components/GradeSelect';
+import { signIn } from 'next-auth/react';
+import { HomeIcon } from '@heroicons/react/24/outline';
 
 const SignInPage = () => {
   const router = useRouter();
@@ -22,21 +24,20 @@ const SignInPage = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      const result = await signIn('credentials', {
+        username: formData.username,
+        password: formData.password,
+        grade: formData.grade,
+        redirect: false,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Sign in failed');
+      if (result?.error) {
+        throw new Error(result.error);
       }
 
-      router.push('/courses');
+      // Convert grade to URL-friendly format
+      const gradeId = formData.grade.toLowerCase().replace(/\s+/g, '');
+      router.push(`/grades/${gradeId}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred during sign in');
     } finally {
@@ -52,9 +53,17 @@ const SignInPage = () => {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md space-y-8"
       >
+        <div className="flex justify-end">
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+          >
+            <HomeIcon className="h-6 w-6" /> Go to the Homepage
+          </Link>
+        </div>
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Sign in to your account
+             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
             Please enter your details to sign in

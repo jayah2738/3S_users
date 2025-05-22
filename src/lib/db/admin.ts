@@ -2,6 +2,13 @@ import { hash, compare } from 'bcryptjs';
 import { db } from './db';
 import { prisma } from './db';
 import bcrypt from 'bcryptjs';
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export interface Admin {
   id: string;
@@ -148,6 +155,67 @@ export async function getMaterials(gradeId?: string) {
 
 export async function deleteMaterial(id: string) {
   return prisma.material.delete({
+    where: { id },
+  });
+}
+
+export async function getCourses(gradeId?: string) {
+  return prisma.course.findMany({
+    where: gradeId ? { gradeId } : undefined,
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+}
+
+export async function createCourse(title: string, description: string, gradeId: string, subjectId: string, file: File, type: 'video' | 'pdf', adminId: string) {
+  try {
+    // Convert file to base64
+    const buffer = await file.arrayBuffer();
+    const base64 = Buffer.from(buffer).toString('base64');
+    const dataURI = `data:${file.type};base64,${base64}`;
+    
+    console.log('Uploading to Cloudinary...');
+    // Upload to Cloudinary
+    const uploadResult = await cloudinary.uploader.upload(dataURI, {
+      resource_type: type === 'video' ? 'video' : 'raw',
+      folder: `grades/${gradeId}/${subjectId}/${type}s`,
+      public_id: `${Date.now()}-${file.name}`,
+    });
+
+    console.log('Cloudinary upload successful:', uploadResult.secure_url);
+
+    // Create course in database
+    const course = await prisma.course.create({
+      data: {
+        title,
+        description,
+        type,
+        fileUrl: uploadResult.secure_url,
+        cloudinaryId: uploadResult.public_id,
+        gradeId,
+        subjectId,
+        createdBy: adminId
+      },
+    });
+
+    console.log('Course created in database:', course.id);
+    return course;
+  } catch (error) {
+    console.error('Error in createCourse:', error);
+    throw error;
+  }
+}
+
+export async function updateCourse(id: string, data: { name?: string; description?: string; isActive?: boolean }) {
+  return prisma.course.update({
+    where: { id },
+    data,
+  });
+}
+
+export async function deleteCourse(id: string) {
+  return prisma.course.delete({
     where: { id },
   });
 } 

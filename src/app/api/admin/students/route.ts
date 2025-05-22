@@ -103,7 +103,11 @@ export async function POST(request: Request) {
       where: { username }
     });
 
-    if (existingStudent) {
+    const existingUser = await prisma.user.findUnique({
+      where: { username }
+    });
+
+    if (existingStudent || existingUser) {
       return NextResponse.json(
         { error: 'Username already exists' },
         { status: 400 }

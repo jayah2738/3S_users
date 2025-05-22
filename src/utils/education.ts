@@ -1,19 +1,19 @@
 export const educationLevels = {
   preschool: {
-    name: 'Preschool',
-    grades: ['TPS', 'PS', 'MS', 'GS']
+    name: 'preschool',
+    grades: ['tps', 'ps', 'ms', 'gs']
   },
   primary: {
-    name: 'Primary School',
-    grades: ['Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5']
+    name: 'primary school',
+    grades: ['grade 1', 'grade 2', 'grade 3', 'grade 4', 'grade 5']
   },
   middle: {
-    name: 'Middle School',
-    grades: ['Grade 6', 'Grade 7', 'Grade 8', 'Grade 9']
+    name: 'middle school',
+    grades: ['grade 6', 'grade 7', 'grade 8', 'grade 9']
   },
   high: {
-    name: 'High School',
-    grades: ['Grade 10', 'Grade 11 L', 'Grade 11 OSE', 'Grade 11 S', 'Grade 12 L', 'Grade 12 OSE', 'Grade 12 S']
+    name: 'high school',
+    grades: ['grade 10', 'grade 11 l', 'grade 11 ose', 'grade 11 s', 'grade 12 l', 'grade 12 ose', 'grade 12 s']
   }
 } as const;
 

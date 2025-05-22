@@ -117,7 +117,7 @@ const AboutSectionTwo = () => {
                                 />
                               </div>
                               <div>
-                                <h3 className="text-lg font-semibold text-green-500">{message.sender}</h3>
+                                <h3 className="text-lg font-semibold text-green-500 capitalize">Teacher.{message.sender}</h3>
                                 <p className="text-sm text-gray-500 dark:text-gray-400">
                                   {new Date(message.timestamp).toLocaleString()}
                                 </p>

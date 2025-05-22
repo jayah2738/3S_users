@@ -42,7 +42,6 @@ const Video = () => {
                 }>
                   <ReactPlayer
                     url="https://www.youtube.com/watch?v=ZcO4KuriDU8"
-                    playing
                     loop
                     controls={false}
                     width="100%"

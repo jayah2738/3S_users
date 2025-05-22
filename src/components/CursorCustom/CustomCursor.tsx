@@ -5,12 +5,17 @@ import styles from "./CustomCursor.module.css";
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isClicking, setIsClicking] = useState(false);
   const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
-      setPosition({ x: event.clientX, y: event.clientY });
+      const { clientX, clientY } = event;
+      setPosition({ x: clientX, y: clientY });
     };
+
+    const handleMouseDown = () => setIsClicking(true);
+    const handleMouseUp = () => setIsClicking(false);
 
     const handleMouseEnter = () => {
       setIsHovering(true);
@@ -40,10 +45,14 @@ const CustomCursor = () => {
     document.body.style.cursor = 'none';
 
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
     window.addEventListener("mouseover", handleLinkHover);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("mouseover", handleLinkHover);
       document.body.style.cursor = 'auto';
     };
@@ -52,17 +61,16 @@ const CustomCursor = () => {
   return (
     <div
       ref={cursorRef}
-      className={`${styles.cursor} ${isHovering ? styles.hover : ''}`}
+      className={`${styles.cursor} ${isClicking ? styles.clicking : ''} ${isHovering ? styles.hover : ''}`}
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
       }}
     >
       <div className={styles.cursorRing}></div>
       <div className={styles.cursorDot}></div>
-      {isHovering && <div className={styles.cursorBullet}></div>}
+      <div className={styles.cursorBullet}></div>
     </div>
   );
 };
 
-export default CustomCursor;
-
+export default CustomCursor; 
